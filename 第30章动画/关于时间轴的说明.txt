@@ -1,0 +1,32 @@
+现在来重点说一下QTimeLine的状态，一共有以下三种：
+
+QTimeLine.NotRunning	未启动
+QTimeLine.Running		运行中
+QTimeLine.Paused		暂停中
+
+在 未开始或者运行结束时，QTimeLine就会处于 NotRunning状态
+
+当 调用start()方法启动后，变为 Running状态 ，期间QTimeLine会不断发出frameChanged信号
+
+而当在运行中 调用setPaused(True)让QTimeLine暂停的话，就会变为 Paused状态。
+
+每当状态发生改变，QTimeLine都会发出stateChanged信号，可以根据该信号来判断动画所处的状态并作相应的处理。
+###############################################################################################
+以下四个方法用于改变QTimeLine状态：
+
+start()：让QTimeLine进入Running状态。
+
+stop()：让QTimeLine进入NotRunning状态。
+
+resume()：让QTimeLine从Paused状态或者NotRunning状态转为Running状态，动画从当前帧继续
+(注意start()方法不是从当前帧继续，而是直接从头开始)。
+
+setPaused()：传入True，让QTimeLine进入Paused状态；传入False，让QTimeLine进入Running状态
+(传入False时QTimeLine的状态必须为Paused)。
+####################################################################################
+QTimeLine的方向概念，一共有两种方向：
+
+QTimeLine.Forward (默认方向)
+QTimeLine.Backward
+
+当为QTimeLine.Foward时，动画按照我们初始设定进行移动；而为QTimeLine.Backward时，我们可以实现一种动画反向的效果。
